@@ -2,9 +2,6 @@
 #ifndef BPTREE_H
 #define BPTREE_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 #include "nodestore.h"
 
@@ -19,8 +16,6 @@ void    bptree_delete(BPTree* t, int key);
 
 int     bptree_height(const BPTree* t);
 
-#ifdef __cplusplus
-}
-#endif
+
 
 #endif
