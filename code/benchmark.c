@@ -294,7 +294,7 @@ int main(int argc, char **argv) {
 
     fprintf(out, "tag,impl,M,n_insert,n_search,n_delete,round,insert_ns,search_ns,delete_ns,found_count,height_after_insert\n");
 
-    int tottime = 0;
+    uint64_t tottime = 0;
     for (int r = 1; r <= rounds; ++r) {
         BPTree *t = bptree_create(m, ops);
         if (!t) {
