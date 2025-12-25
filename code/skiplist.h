@@ -1,33 +1,35 @@
-// skiplist.h
 #ifndef SKIPLIST_H
 #define SKIPLIST_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include <stdbool.h>
 
-typedef struct SkipList SkipList;
-typedef struct SkipNode SkipNode;
+// 你可以按数据规模调大/调小（常用 16/32/64）
+#define SKIPLIST_MAX_LEVEL 32
 
-SkipList* skiplist_create(int max_level, double p, unsigned seed);
-void      skiplist_destroy(SkipList* sl);
+typedef struct SkipListNode {
+    int key;
+    int level;                      // 该节点 forward[] 长度
+    struct SkipListNode* forward[]; // forward[i]：第 i 层的下一个节点
+} SkipListNode;
 
-int       skiplist_size(const SkipList* sl);
+typedef struct SkipList {
+    int max_level;                  // <= SKIPLIST_MAX_LEVEL
+    double p;                       // 提升概率（常用 0.5）
+    int level;                      // 当前跳表实际层数（>=1）
+    int size;                       // 元素数量
+    SkipListNode* header;           // 头结点（哨兵）
+} SkipList;
 
-SkipNode* skiplist_search(const SkipList* sl, int key);
-SkipNode* skiplist_first_ge(const SkipList* sl, int key);
+// 创建 / 销毁
+SkipList* skiplist_create(int max_level, double p);
+void skiplist_destroy(SkipList* sl);
 
-int       skiplist_insert(SkipList* sl, int key, void* val); // returns 1 if inserted, 0 if existed(updated)
-int       skiplist_erase(SkipList* sl, int key);             // returns 1 if erased, 0 if not found
+// 基本操作
+bool skiplist_search(const SkipList* sl, int key);
+bool skiplist_insert(SkipList* sl, int key);  // 成功插入返回 true；重复 key 返回 false
+bool skiplist_erase(SkipList* sl, int key);   // 删除成功 true；不存在 false
 
-SkipNode* skiplist_first(const SkipList* sl);
-SkipNode* skipnode_next0(const SkipNode* x);
-int       skipnode_key(const SkipNode* x);
-void*     skipnode_val(const SkipNode* x);
-void      skipnode_set_val(SkipNode* x, void* v);
-
-#ifdef __cplusplus
-}
-#endif
+// 调试输出（可选）
+void skiplist_print(const SkipList* sl);
 
 #endif

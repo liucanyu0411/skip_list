@@ -1,4 +1,3 @@
-// bptree.h
 #ifndef BPTREE_H
 #define BPTREE_H
 
@@ -15,7 +14,5 @@ void    bptree_insert(BPTree* t, int key);
 void    bptree_delete(BPTree* t, int key);
 
 int     bptree_height(const BPTree* t);
-
-
 
 #endif
