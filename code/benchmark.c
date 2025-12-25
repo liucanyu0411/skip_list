@@ -317,7 +317,7 @@ int main(int argc, char **argv) {
 
         int h = bptree_height(t);
 
-        fprintf(out, "%s,%s,%d,%zu,%zu,%zu,%d,%" PRIu64 ",%" PRIu64 ",%" PRIu64 ",%d,%d,total time=%" PRIu64 "\n",
+        fprintf(out, "%s,%s,%d,%zu,%zu,%zu,%d,%llu,%llu,%llu,%d,%d,total time=%llu\n",
                 tag, impl_name(impl), m, n_ins, n_qry, n_del, r,
                 (t1 - t0), (t2 - t1), (t3 - t2), found, h, (t3 - t0));
 
@@ -326,7 +326,7 @@ int main(int argc, char **argv) {
         bptree_destroy(t);
     }
 
-    fprintf(out, "total time for all rounds: %" PRIu64 " ns\n", tottime);
+    fprintf(out, "total time for all rounds: %llu ns\n", tottime);
 
     if (out != stdout) fclose(out);
     free(ins);
